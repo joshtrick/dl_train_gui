@@ -1,0 +1,9 @@
+<AnnotateScreen>:
+  name: 'annot_scr'
+  BoxLayout:
+    Button:
+      id: run_labelme_btn
+      text: 'Run LabelMe'
+      on_release:
+        root.create_labelme_thread()
+        root.run_labelme_t.start()

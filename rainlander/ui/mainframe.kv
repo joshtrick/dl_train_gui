@@ -1,0 +1,68 @@
+#:kivy 1.11
+#:import screenmanager kivy.uix.screenmanager
+
+<MainFrame>:
+  rows: 2
+  ActionBar:
+    id: main_menu
+    ActionView:
+      id: main_menu_view
+      ActionPrevious:
+        with_previous: False
+      ActionButton:
+        text: 'Annotate'
+        on_release:
+          scr_mgr.current = "annot_scr"
+
+      ActionButton:
+        text: 'Train'
+        on_release:
+          scr_mgr.current = "train_scr"
+
+      ActionButton:
+        text: 'Evaluate'
+        on_release:
+          scr_mgr.current = "evalu_scr"
+
+      ActionButton:
+        text: 'Generate SG'
+        on_release:
+          scr_mgr.current = "gensg_scr"
+
+      ActionButton:
+        text: 'Exit'
+        on_release:
+          app.get_running_app().stop()
+
+  # ********Main Screen********
+  ScreenManager:
+    id: scr_mgr
+    transition: screenmanager.SwapTransition()
+    # ********Annotate Screen********
+    AnnotateScreen:
+      id: annot_scr
+
+
+    # ********Train Screen********
+    Screen:
+      name: "train_scr"
+      id: train_scr
+
+      Label:
+        text: "Train"
+
+    # ********Evaluate Screen********
+    Screen:
+      name: "evalu_scr"
+      id: evalu_scr
+
+      Label:
+        text: "Evaluate"
+
+    # ********Generate SG Screen********
+    Screen:
+      name: "gensg_scr"
+      id: gensg_scr
+
+      Label:
+        text: "Generate SG"
