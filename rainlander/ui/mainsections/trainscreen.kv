@@ -1,0 +1,66 @@
+#:import screenmanager kivy.uix.screenmanager
+# Define your background color Template
+<BackgroundColor@Widget>:
+  background_color: 1, 1, 1, 1
+  canvas.before:
+    Color:
+      rgba: root.background_color
+    Rectangle:
+      size: self.size
+      pos: self.pos
+# Now you can simply Mix the `BackgroundColor` class with almost
+# any other widget... to give it a background.
+<BackgroundLabel@Label+BackgroundColor>:
+  background_color: 0, 0, 0, 1
+  # Default the background color for this label
+  # to r 0, g 0, b 0, a 0
+# Use the BackgroundLabel any where in your kv code like below
+
+<ModelButton@Button>:
+  size_hint: None, None
+  size: 120, 30
+  background_disabled_normal: 'atlas://data/images/defaulttheme/button'
+
+<TrainScreen>:
+  name: 'train_scr'
+  BoxLayout:
+    orientation: 'vertical'
+    Splitter:
+      size_hint_y: None
+      height: dp(400)
+      sizable_from: 'bottom'
+      FloatLayout:
+        GridLayout:
+          rows: 4
+          pos_hint: {'x': 0, 'y': 0}
+          size_hint_y: 1
+          spacing: 10
+          ModelButton:
+            text: 'Detection'
+            on_release:
+              training_panel_mgr.current = "det_scr"
+          ModelButton:
+            text: 'Classification'
+            on_release:
+              training_panel_mgr.current = "cls_scr"
+          ModelButton:
+            text: 'Segmentation'
+            on_release:
+              training_panel_mgr.current = "seg_scr"
+          ModelButton:
+            text: 'Load a Model'
+        ScreenManager:
+          id: training_panel_mgr
+          transition: screenmanager.FadeTransition()
+          DetectionScreen:
+            id: det_scr
+          ClassificationScreen:
+            id: cls_scr
+          SegmentationScreen:
+            id: seg_scr
+
+    BackgroundLabel:
+      text_size: self.size
+      halign: 'left'
+      valign: 'top'
+      text: 'Log to be filled'
