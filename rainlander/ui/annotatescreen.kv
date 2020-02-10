@@ -1,8 +1,10 @@
 <AnnotateScreen>:
   name: 'annot_scr'
-  BoxLayout:
+  FloatLayout:
     Button:
       id: run_labelme_btn
+      pos_hint: {'y': .02}
+      size_hint: 1, .98
       text: 'Run LabelMe'
       on_release:
         root.create_labelme_thread()

@@ -6,7 +6,8 @@ from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.properties import ObjectProperty
-from core.annotate_screen import AnnotateScreen
+from core.annotatescreen import AnnotateScreen
+from core.trainscreen import TrainScreen
 
 class MainFrame(GridLayout):
     Builder.load_file('ui/mainframe.kv')

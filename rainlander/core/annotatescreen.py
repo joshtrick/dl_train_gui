@@ -9,7 +9,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 class AnnotateScreen(Screen):
-    Builder.load_file('ui/annotate_screen.kv')
+    Builder.load_file('ui/annotatescreen.kv')
 
     def __init__(self, **kwargs):
         super(AnnotateScreen, self).__init__(**kwargs)
