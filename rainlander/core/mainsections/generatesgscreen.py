@@ -12,6 +12,6 @@ class GenerateSGScreen(Screen):
     Builder.load_file('ui/mainsections/generatesgscreen.kv')
 
     def __init__(self, **kwargs):
-        super(GenerateSGScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         pass
 

@@ -12,5 +12,8 @@ class ClassificationScreen(Screen):
     Builder.load_file('ui/train/classificationscreen.kv')
 
     def __init__(self, **kwargs):
-        super(ClassificationScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
+        pass
+
+    def train(self):
         pass

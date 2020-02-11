@@ -1,5 +1,32 @@
 <DetectionScreen>:
   name: 'det_scr'
-  FloatLayout:
-    Label:
-      text: 'willo'
+  GridLayout:
+    rows: 2
+    Button:
+      id: model_selector
+      text: 'yolo'
+      size_hint: None, None
+      size: 120, 30
+    GridLayout:
+      cols: 3
+      Label:
+        text: 'threshold'
+      Slider:
+        id: threshold
+        min: 0
+        step: 1
+        max: 10
+      Label:
+        text: str(threshold.value)
+#      Slider:
+#        id: threshold_1
+#        min: 0
+#        max: 10
+#        step: 1
+#
+#
+#      Label:
+#          text: 'q'
+#      Label:
+#          text: root.train_param_dict
+

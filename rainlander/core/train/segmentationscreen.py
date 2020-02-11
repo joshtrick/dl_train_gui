@@ -12,5 +12,8 @@ class SegmentationScreen(Screen):
     Builder.load_file('ui/train/segmentationscreen.kv')
 
     def __init__(self, **kwargs):
-        super(SegmentationScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
+        pass
+
+    def train(self):
         pass

@@ -15,7 +15,7 @@ class MainFrame(GridLayout):
     Builder.load_file('ui/mainframe.kv')
 
     def __init__(self, **kwargs):
-        super(MainFrame, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         app = App.get_running_app()
         pass
 

@@ -12,7 +12,7 @@ class AnnotateScreen(Screen):
     Builder.load_file('ui/mainsections/annotatescreen.kv')
 
     def __init__(self, **kwargs):
-        super(AnnotateScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         pass
 
     def create_labelme_thread(self):

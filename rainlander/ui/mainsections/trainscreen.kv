@@ -29,9 +29,13 @@
       size_hint_y: None
       height: dp(400)
       sizable_from: 'bottom'
-      FloatLayout:
+      GridLayout:
+        cols: 2
         GridLayout:
-          rows: 4
+          id: button_grid
+          size_hint_x: None
+          width: 120
+          rows: 6
           pos_hint: {'x': 0, 'y': 0}
           size_hint_y: 1
           spacing: 10
@@ -49,6 +53,15 @@
               training_panel_mgr.current = "seg_scr"
           ModelButton:
             text: 'Load a Model'
+          ModelButton:
+            text: 'Start Training'
+            on_release:
+              root.create_training_thread()
+              root.start_training_t.start()
+          ModelButton:
+            text: 'Start Training'
+            on_release:
+              det_scr.stop()
         ScreenManager:
           id: training_panel_mgr
           transition: screenmanager.FadeTransition()

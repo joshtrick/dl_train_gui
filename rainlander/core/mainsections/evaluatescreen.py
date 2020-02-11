@@ -12,6 +12,6 @@ class EvaluateScreen(Screen):
     Builder.load_file('ui/mainsections/evaluatescreen.kv')
 
     def __init__(self, **kwargs):
-        super(EvaluateScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         pass
 
