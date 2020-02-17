@@ -25,7 +25,8 @@ class DetectionScreen(Screen):
         print("hello")
         #dummy_func(100)
         #os.system("gnome")
-        self.pro = subprocess.Popen(['python', 'utils/dummy.py'])
+        os.system("gnome-terminal -x python utils/dummy.py")
+        #self.pro = subprocess.Popen(['python', 'utils/dummy.py'])
 
     def stop(self):
         try:

@@ -1,32 +1,109 @@
 <DetectionScreen>:
   name: 'det_scr'
-  GridLayout:
-    rows: 2
-    Button:
-      id: model_selector
-      text: 'yolo'
-      size_hint: None, None
-      size: 120, 30
+  ScrollView:
+    do_scroll_y: True
     GridLayout:
-      cols: 3
+      spacing: 10
+      size_hint_y: None
+      height: self.minimum_height
+      cols: 2
+
       Label:
-        text: 'threshold'
+        text: 'Detector'
+        size_hint: None, None
+        size: 150, 30
+      Button:
+        id: model_selector
+        text: 'yolo'
+        size_hint: None, None
+        size: 150, 30
+
+      Label:
+        text: 'Parameter 01 ['+str(parameter01.value)+']'
+        size_hint: None, None
+        size: 150, 30
       Slider:
-        id: threshold
+        size_hint: None, None
+        size: 150, 30
+        cursor_size: 20, 20
+        id: parameter01
         min: 0
         step: 1
-        max: 10
-      Label:
-        text: str(threshold.value)
-#      Slider:
-#        id: threshold_1
-#        min: 0
-#        max: 10
-#        step: 1
-#
-#
-#      Label:
-#          text: 'q'
-#      Label:
-#          text: root.train_param_dict
+        max: 100
 
+      Label:
+        text: 'Parameter 02 ['+parameter02.text+']'
+        size_hint: None, None
+        size: 150, 30
+      TextInput:
+        id: parameter02
+        text: '0.5'
+        multiline: False
+        size_hint: None, None
+        size: 150, 30
+
+      # Testing ScrollView
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
+      Label:
+        text: 'Testing'
+        size_hint: None, None
+        size: 150, 30
