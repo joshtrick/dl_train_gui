@@ -48,8 +48,7 @@ class DetectionScreen(Screen):
 
     def select_file(self, path, filename, text_info):
         try:
-            print(os.path.join(path, filename[0]))
-            text_info.text = os.path.join(path, filename[0])
+            text_info.text = filename[0]
         except:
             print("No file selected!")
             pass
