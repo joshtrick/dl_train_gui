@@ -1,3 +1,4 @@
+#: import os os
 <EvaluateScreen>:
   name: 'evalu_scr'
   BoxLayout:
@@ -11,7 +12,7 @@
       sizable_from: 'right'
       FileChooserListView:
         id: file_tree
-        path: '.'
+        path: os.getcwd()
         filters: ['*.jpg', '*.jpeg', '*.JPEG', '*.JPG', '*.PNG', '*.png', '*.BMP', '*.bmp']
         on_selection: root.load_preview()
     BoxLayout:
@@ -43,63 +44,215 @@
             source: 'images/logo_02.png'
             size: self.texture_size
 
-      GridLayout:
-        padding: [5, 5, 5, 0]
-        rows: 2
+      ScrollView:
+        do_scroll_y: True
+        do_scroll_x: True
         GridLayout:
-          cols: 3
-          spacing: 10
-          Button:
-            text: 'Run'
-            size_hint: None, None
-            size: 150, 30
-            on_release: root.load_result()
-          Label:
-            size_hint: None, None
-            text: 'Input Path:'
-            size: 70, 30
-          TextInput:
-            readonly: True
-            size_hint_y: None
-            height: 30
-            text: file_tree.path
-        ScrollView:
-          do_scroll_y: True
-          do_scroll_x: True
+          padding: [5, 5, 5, 0]
+          size_hint: None, None
+          width: self.minimum_width
+          height: self.minimum_height
+          rows: 2
+          spacing: 5
           GridLayout:
-            cols: 2
+            cols: 1
             size_hint: None, None
             width: self.minimum_width
             height: self.minimum_height
+            Button:
+              text: 'Run'
+              size_hint: None, None
+              size: 150, 30
+              on_release: root.load_result()
+          GridLayout:
+            size_hint: None, None
+            spacing: 5
+            width: self.minimum_width
+            height: self.minimum_height
+            cols: 2
+            # ********Parameter********
             Label:
-              text: 'Parameter 01 [' + str(parameter01.value) + ']'
+              text: 'Model'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            # Dropdown in kv file
+            BoxLayout:
+              # trick to not lost the Dropdown instance
+              # Dropdown itself is not really made to be used in kv.
+              __safe_id: [dropdown.__self__]
+              Button:
+                id: param_model_selector
+                text: 'Choose a Model'
+                on_release: dropdown.open(self)
+                size_hint: None, None
+                size: 200, 30
+              Widget:
+                on_parent: dropdown.dismiss()
+              DropDown:
+                id: dropdown
+                on_select: param_model_selector.text = '{}'.format(args[1])
+                Button:
+                  text: '[Detection] Yolo-V3'
+                  size_hint: None, None
+                  size: 200, 30
+                  on_release: dropdown.select(self.text)
+                Button:
+                  text: '[Classification] ResNet-50'
+                  size_hint: None, None
+                  size: 200, 30
+                  on_release: dropdown.select(self.text)
+                Button:
+                  text: '[Segmentation] DeepLab-V3'
+                  size_hint: None, None
+                  size: 200, 30
+                  on_release: dropdown.select(self.text)
+
+            # ********Parameter********
+            Label:
+              text: 'Dataset Path'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            TextInput:
+              id: param_image_dir
+              readonly: True
+              size_hint_y: None
+              height: 30
+              text: file_tree.path
+
+            # ********Parameter********
+            Button:
+              text: 'Model File'
+              size_hint: None, None
+              size: 150, 30
+              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path")
+            TextInput:
+              id: param_checkpoint_path
+              multiline: False
+              size_hint_y: None
+              height: 30
+
+            # ********Parameter********
+            Button:
+              text: 'Class List File'
+              size_hint: None, None
+              size: 150, 30
+              on_release: root.show_filechosser(text_input_id = "param_class_name_path")
+            TextInput:
+              id: param_class_name_path
+              multiline: False
+              size_hint: None, None
+              size: 500, 30
+
+            # ********Parameter********
+            Label:
+              text: 'Encrypted Model File'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            BoxLayout:
+              size_hint: None, None
+              size: 30, 30
+              CheckBox:
+                id: param_encrypted_initial_checkpoint
+                active: False
+
+            # ********Parameter********
+            Label:
+              text: 'Number of Classes'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            TextInput:
+              id: param_num_classes
+              text: "1"
+              multiline: False
+              size_hint: None, None
+              size: 500, 30
+
+#            # ********Parameter********
+#            Label:
+#              text: 'Model Scale'
+#              size_hint: None, None
+#              text_size: self.size
+#              halign: 'left'
+#              valign: 'center'
+#              size: 150, 30
+#            GridLayout:
+#              id: prarm_model_scale
+#              cols: 3
+#              ToggleButton:
+#                group: 'model_scale'
+#                text: 'Small'
+#                size_hint: None, None
+#                size: 150, 30
+#                state: 'down'
+#              ToggleButton:
+#                group: 'model_scale'
+#                text: 'Middle'
+#                size_hint: None, None
+#                size: 150, 30
+#              ToggleButton:
+#                group: 'model_scale'
+#                text: 'Large'
+#                size_hint: None, None
+#                size: 150, 30
+
+            # ********Parameter********
+            Label:
+              text: 'GPUs to Use'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            TextInput:
+              id: param_gpus
+              text: "0"
+              multiline: False
+              size_hint: None, None
+              size: 500, 30
+
+            # ********Parameter********
+            Label:
+              text: 'Score [{:.2f}]'.format(param_min_score_threshold.value)
               size_hint: None, None
               text_size: self.size
               halign: 'left'
               valign: 'center'
               size: 150, 30
             Slider:
+              id: param_min_score_threshold
               size_hint: None, None
               size: 400, 30
               cursor_size: 20, 20
-              id: parameter01
               min: 0
-              step: 1
-              max: 100
+              step: 0.01
+              max: 1
 
-            # ********Testing********
+            # ********Parameter********
             Label:
-              text: 'Testing'
+              text: 'Batch Size [' + str(param_batch_size.value) + ']'
               size_hint: None, None
               text_size: self.size
               halign: 'left'
               valign: 'center'
-              size: 150, 500
-            Label:
-              text: 'Testing'
+              size: 150, 30
+            Slider:
+              id: param_batch_size
               size_hint: None, None
-              text_size: self.size
-              halign: 'left'
-              valign: 'center'
-              size: 150, 500
+              size: 400, 30
+              cursor_size: 20, 20
+              min: 1
+              step: 1
+              max: 256
 

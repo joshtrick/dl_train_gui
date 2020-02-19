@@ -1,0 +1,15 @@
+*__pycache__*
+*.pyc
+*.so
+*.swo
+*.swp
+*.c
+*_pb2.py
+*.pb.cc
+*.pb.h
+*.jpg
+*.png
+build
+third_party/SSDTensorflow/checkpoints
+third_party/SSDTensorflow/demo
+third_party/yolov3/input_baoxin

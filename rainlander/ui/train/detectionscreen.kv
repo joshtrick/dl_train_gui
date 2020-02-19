@@ -1,116 +1,331 @@
+#:import os os
 <DetectionScreen>:
   name: 'det_scr'
 
   ScrollView:
     do_scroll_y: True
     do_scroll_x: True
-    GridLayout:
-      spacing: 10
+    BoxLayout:
+      spacing: 20
       padding: [20, 0, 0, 0]
       size_hint: None, None
       width: self.minimum_width
       height: self.minimum_height
-      cols: 2
+      orientation: 'horizontal'
+#cols: 2
 
-      Label:
-        text: 'Detector'
+      GridLayout:
+        spacing: 10
         size_hint: None, None
-        text_size: self.size
-        halign: 'left'
-        valign: 'center'
-        size: 150, 30
-      # Dropdown in kv file
-      BoxLayout:
-        # trick to not lost the Dropdown instance
-        # Dropdown itself is not really made to be used in kv.
-#        __safe_id: [dropdown.__self__]
+        width: self.minimum_width
+        height: self.minimum_height
+        cols: 2
+        # ********Parameter********
+        Label:
+          text: 'Detector'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        # Dropdown in kv file
+        BoxLayout:
+          # trick to not lost the Dropdown instance
+          # Dropdown itself is not really made to be used in kv.
+          __safe_id: [dropdown.__self__]
+          Button:
+            id: param_model_selector
+            text: 'Choose a Model'
+            on_release: dropdown.open(self)
+            size_hint: None, None
+            size: 150, 30
+          Widget:
+            on_parent: dropdown.dismiss()
+          DropDown:
+            id: dropdown
+            on_select: param_model_selector.text = '{}'.format(args[1])
+            Button:
+              text: 'yolo'
+              size_hint: None, None
+              size: 150, 30
+              on_release: dropdown.select(self.text)
+            Button:
+              text: 'ssd'
+              size_hint: None, None
+              size: 150, 30
+              on_release: dropdown.select(self.text)
+
+        # ********Parameter********
         Button:
-          id: model_selector
-          text: 'Choose a Model'
-          on_release: dropdown.open(self)
+          text: 'Model File'
           size_hint: None, None
           size: 150, 30
-        Widget:
-          on_parent: dropdown.dismiss()
-        DropDown:
-          id: dropdown
-          on_select: model_selector.text = '{}'.format(args[1])
-          Button:
-            text: 'yolo'
-            size_hint: None, None
-            size: 150, 30
-            on_release: dropdown.select(self.text)
-          Button:
-            text: 'ssd'
-            size_hint: None, None
-            size: 150, 30
-            on_release: dropdown.select(self.text)
+          on_release: root.show_filechosser(text_input_id = "param_checkpoint_path")
+        TextInput:
+          id: param_checkpoint_path
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
 
-      Label:
-        text: 'Parameter 01 [' + str(parameter01.value) + ']'
-        size_hint: None, None
-        text_size: self.size
-        halign: 'left'
-        valign: 'center'
-        size: 150, 30
-      Slider:
-        size_hint: None, None
-        size: 400, 30
-        cursor_size: 20, 20
-        id: parameter01
-        min: 0
-        step: 1
-        max: 100
+        # ********Parameter********
+        Label:
+          text: 'Encrypted Model File'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_encrypted_initial_checkpoint
+            active: False
 
-      Label:
-        text: 'Parameter 02 [' + parameter02.text + ']'
-        size_hint: None, None
-        text_size: self.size
-        halign: 'left'
-        valign: 'center'
-        size: 150, 30
-      TextInput:
-        id: parameter02
-        text: '0.5'
-        multiline: False
-        size_hint: None, None
-        size: 150, 30
+        # ********Parameter********
+        Button:
+          text: 'Project Path'
+          size_hint: None, None
+          size: 150, 30
+          on_release: root.show_filechosser(text_input_id = "param_train_dir", choose_path = True)
+        TextInput:
+          id: param_train_dir
+          text: os.getcwd()
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
 
-      Button:
-        text: 'Select File'
-        size_hint: None, None
-        size: 150, 30
-        on_release: root.show_filechosser(text_input_id = "filepath01")
-      TextInput:
-        id: filepath01
-        multiline: False
-        size_hint: None, None
-        size: 400, 30
+        # ********Parameter********
+        Label:
+          text: 'Number of Classes'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        TextInput:
+          id: param_num_classes
+          text: "1"
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
 
-      Button:
-        text: 'Select Folder'
-        size_hint: None, None
-        size: 150, 30
-        on_release: root.show_filechosser(text_input_id = "folderpath01", choose_path = True)
-      TextInput:
-        id: folderpath01
-        multiline: False
-        size_hint: None, None
-        size: 400, 30
+#        # ********Parameter********
+#        Label:
+#          text: 'Model Scale'
+#          size_hint: None, None
+#          text_size: self.size
+#          halign: 'left'
+#          valign: 'center'
+#          size: 150, 30
+#        GridLayout:
+#          id: prarm_model_scale
+#          cols: 3
+#          ToggleButton:
+#            group: 'model_scale'
+#            text: 'Small'
+#            size_hint: None, None
+#            size: 150, 30
+#            state: 'down'
+#          ToggleButton:
+#            group: 'model_scale'
+#            text: 'Middle'
+#            size_hint: None, None
+#            size: 150, 30
+#          ToggleButton:
+#            group: 'model_scale'
+#            text: 'Large'
+#            size_hint: None, None
+#            size: 150, 30
 
-      # ********Testing********
-      Label:
-        text: 'Testing'
-        size_hint: None, None
-        text_size: self.size
-        halign: 'left'
-        valign: 'center'
-        size: 150, 500
-      Label:
-        text: 'Testing'
-        size_hint: None, None
-        text_size: self.size
-        halign: 'left'
-        valign: 'center'
-        size: 150, 500
+        # ********Parameter********
+        Label:
+          text: 'GPUs to Use'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        TextInput:
+          id: param_gpus
+          text: "0"
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
 
+        # ********Parameter********
+        Label:
+          text: 'Batch Size [' + str(param_batch_size.value) + ']'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        Slider:
+          id: param_batch_size
+          size_hint: None, None
+          size: 400, 30
+          cursor_size: 20, 20
+          min: 1
+          step: 1
+          max: 256
+
+        # ********Parameter********
+        Button:
+          text: 'Dataset Path'
+          size_hint: None, None
+          size: 150, 30
+          on_release: root.show_filechosser(text_input_id = "param_image_dir", choose_path = True)
+        TextInput:
+          id: param_image_dir
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
+
+        # ********Parameter********
+        Button:
+          text: 'Label Path'
+          size_hint: None, None
+          size: 150, 30
+          on_release: root.show_filechosser(text_input_id = "param_label_path", choose_path = True)
+        TextInput:
+          id: param_label_path
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
+
+        # ********Parameter********
+        Button:
+          text: 'Class List File'
+          size_hint: None, None
+          size: 150, 30
+          on_release: root.show_filechosser(text_input_id = "param_class_name_path")
+        TextInput:
+          id: param_class_name_path
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
+
+      GridLayout:
+        spacing: 10
+        size_hint: None, None
+        pos_hint: {'top': 1}
+        width: self.minimum_width
+        height: self.minimum_height
+        cols: 2
+        # ********Parameter********
+        Label:
+          text: 'Preprocess Options'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        Label:
+          size_hint: None, None
+          size: 150, 30
+
+        # ********Parameter********
+        Label:
+          text: 'Random Translate'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_random_translate
+            active: False
+
+        # ********Parameter********
+        Label:
+          text: 'Random Crop'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_random_crop
+            active: False
+
+        # ********Parameter********
+        Label:
+          text: 'Random Flip (H)'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_random_horizontal_flip
+            active: False
+
+        # ********Parameter********
+        Label:
+          text: 'Random Flip (V)'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_random_vertical_flip
+            active: False
+
+        # ********Parameter********
+        Label:
+          text: 'Random Rotation'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_random_vertical_flip
+            active: False
+
+        # ********Parameter********
+        Label:
+          text: 'Shuffle Channels'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_random_shuffle_channel
+            active: False
+
+        # ********Parameter********
+        Label:
+          text: 'Convert to Gray'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        BoxLayout:
+          size_hint: None, None
+          size: 30, 30
+          CheckBox:
+            id: param_gray
+            active: False

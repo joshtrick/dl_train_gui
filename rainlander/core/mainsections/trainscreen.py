@@ -22,6 +22,7 @@ class TrainScreen(Screen):
         for child in id.children:
             if isinstance(child, Button):
                 child.disabled = True
+        self.ids.cancel.disabled = False
 
     def enable_group_buttons(self, id):
         for child in id.children:

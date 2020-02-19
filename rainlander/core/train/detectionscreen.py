@@ -20,6 +20,7 @@ class DetectionScreen(Screen):
     Builder.load_file('ui/train/detectionscreen.kv')
 
     def __init__(self, **kwargs):
+        self.train_process = None
         super().__init__(**kwargs)
         pass
 
@@ -59,24 +60,20 @@ class DetectionScreen(Screen):
         text_info.text = path
         self.dismiss_filechooser()
 
-
-
     # ********Functions for Training********
+    def set_config(self):
+       pass
+
     def train(self):
-        print(self.ids.model_selector.text)
-        print(self.ids.parameter01.value)
-        print(self.ids.parameter02.text)
-        print(self.ids.filepath01.text)
-        print(self.ids.folderpath01.text)
-        #dummy_func(100)
-        #os.system("gnome")
-        #os.system("gnome-terminal -x python utils/dummy.py")
-        #self.pro = subprocess.Popen(['python', 'utils/dummy.py'])
+        if self.train_process == None:
+            self.train_process = subprocess.Popen(['python', 'utils/dummy.py'])
+        else:
+            print("Already running")
 
     def stop(self):
         try:
-            self.pro.terminate()
+            self.train_process.kill()
+            self.train_process = None
         except:
             pass
-        #os.killpg(os.getpgid(self.pro.pid), signal.SIGTERM)
 
