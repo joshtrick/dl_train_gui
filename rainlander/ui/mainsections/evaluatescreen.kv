@@ -185,7 +185,7 @@
               text: 'Model File'
               size_hint: None, None
               size: 150, 30
-              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path")
+              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path", choose_path = True)
             TextInput:
               id: param_checkpoint_path
               multiline: False

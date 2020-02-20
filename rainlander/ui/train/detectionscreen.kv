@@ -22,7 +22,8 @@
         cols: 2
         # ********Parameter********
         Label:
-          text: 'Detector'
+          id: param_model_type
+          text: 'Detection'
           size_hint: None, None
           text_size: self.size
           halign: 'left'
@@ -35,7 +36,7 @@
           __safe_id: [dropdown.__self__]
           Button:
             id: param_model_selector
-            text: 'Choose a Model'
+            text: 'Tiny-Yolo'
             on_release: dropdown.open(self)
             size_hint: None, None
             size: 150, 30
@@ -45,7 +46,7 @@
             id: dropdown
             on_select: param_model_selector.text = '{}'.format(args[1])
             Button:
-              text: 'yolo'
+              text: 'Tiny-Yolo'
               size_hint: None, None
               size: 150, 30
               on_release: dropdown.select(self.text)
@@ -60,7 +61,7 @@
           text: 'Model File'
           size_hint: None, None
           size: 150, 30
-          on_release: root.show_filechosser(text_input_id = "param_checkpoint_path")
+          on_release: root.show_filechosser(text_input_id = "param_checkpoint_path", choose_path = True)
         TextInput:
           id: param_checkpoint_path
           multiline: False

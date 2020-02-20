@@ -33,6 +33,6 @@ def label_collector(filepath):
                     read_json_find_label(full_file_path, labellist)
                     gernerate_name_config(full_output_path, labellist)
                 except:
-                    print("Failed to load: ", full_file_path)
+                    print("Failed to parse: ", full_file_path)
 
-
+    print("Finished")

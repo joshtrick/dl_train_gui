@@ -41,7 +41,7 @@ class EvaluateScreen(Screen):
                                                         + self.toggle_btn_text('seg_selector', self.ids.seg_selector.text)
         self.param_dict['num_classes']                  = int(self.ids.param_num_classes.text)
         self.param_dict['gpus']                         = self.ids.param_gpus.text
-        self.param_dict['checkpoint_path']              = self.ids.param_checkpoint_path.text
+        self.param_dict['checkpoint_path']              = os.path.join(self.ids.param_checkpoint_path.text, 'ckpt')
         self.param_dict['encrypted_initial_checkpoint'] = self.ids.param_encrypted_initial_checkpoint.active
         self.param_dict['batch_size']                   = self.ids.param_batch_size.value
         self.param_dict['input_sizes']                  = [int(self.ids.param_input_w.text), int(self.ids.param_input_h.text)]
