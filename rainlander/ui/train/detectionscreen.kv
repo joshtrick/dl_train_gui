@@ -171,6 +171,36 @@
           max: 256
 
         # ********Parameter********
+        Label:
+          text: 'Input Width'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        TextInput:
+          id: param_input_w
+          text: "416"
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
+
+        # ********Parameter********
+        Label:
+          text: 'Input Height'
+          size_hint: None, None
+          text_size: self.size
+          halign: 'left'
+          valign: 'center'
+          size: 150, 30
+        TextInput:
+          id: param_input_h
+          text: "416"
+          multiline: False
+          size_hint: None, None
+          size: 500, 30
+
+        # ********Parameter********
         Button:
           text: 'Dataset Path'
           size_hint: None, None
@@ -297,7 +327,7 @@
           size_hint: None, None
           size: 30, 30
           CheckBox:
-            id: param_random_vertical_flip
+            id: param_random_rotation
             active: False
 
         # ********Parameter********

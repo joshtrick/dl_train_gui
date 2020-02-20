@@ -1,11 +1,47 @@
+<FuncButton@Button>:
+  size_hint: None, None
+  size: 150, 30
+  background_disabled_normal: 'atlas://data/images/defaulttheme/button'
+
 <AnnotateScreen>:
   name: 'annot_scr'
-  FloatLayout:
-    Button:
+  GridLayout:
+    id: main_pannel
+    spacing: 10
+    cols: 2
+    Label:
+      size_hint: None, None
+      size: 150, 30
+      text: 'Run Labelme'
+    FuncButton:
       id: run_labelme_btn
-      pos_hint: {'y': .02}
-      size_hint: 1, .98
-      text: 'Run LabelMe'
+      size_hint: None, None
+      size: 150, 30
+      text: 'Labelme'
       on_release:
-        root.create_labelme_thread()
-        root.run_labelme_t.start()
+        root.create_func_thread(root.run_labelme)
+        root.run_func_t.start()
+
+    FuncButton:
+      text: 'Dataset Path'
+      size_hint: None, None
+      size: 150, 30
+      on_release: root.show_filechosser(text_input_id = "param_dataset_path", choose_path = True)
+    TextInput:
+      id: param_dataset_path
+      multiline: False
+      size_hint: None, None
+      size: 500, 30
+
+    Label:
+      size_hint: None, None
+      size: 150, 30
+      text: 'Class List'
+    FuncButton:
+      id: run_class_generator_btn
+      size_hint: None, None
+      size: 150, 30
+      text: 'Run Generator'
+      on_release:
+        root.create_func_thread(root.run_class_generator)
+        root.run_func_t.start()

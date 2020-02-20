@@ -72,43 +72,98 @@
             cols: 2
             # ********Parameter********
             Label:
-              text: 'Model'
+              text: 'Model Selection'
               size_hint: None, None
               text_size: self.size
               halign: 'left'
               valign: 'center'
               size: 150, 30
-            # Dropdown in kv file
-            BoxLayout:
-              # trick to not lost the Dropdown instance
-              # Dropdown itself is not really made to be used in kv.
-              __safe_id: [dropdown.__self__]
-              Button:
-                id: param_model_selector
-                text: 'Choose a Model'
-                on_release: dropdown.open(self)
-                size_hint: None, None
-                size: 200, 30
-              Widget:
-                on_parent: dropdown.dismiss()
-              DropDown:
-                id: dropdown
-                on_select: param_model_selector.text = '{}'.format(args[1])
-                Button:
-                  text: '[Detection] Yolo-V3'
+            GridLayout:
+              id: prarm_model_selector
+              cols: 3
+              size_hint: None, None
+              size: 450, 30
+              BoxLayout:
+                # trick to not lost the Dropdown instance
+                __safe_id: [dropdown_det.__self__]
+                ToggleButton:
+                  id: det_selector
+                  group: 'model_selector'
+                  text: 'Detection'
+                  on_release:
+                    dropdown_det.open(self)
+                    self.state = 'down'
                   size_hint: None, None
-                  size: 200, 30
-                  on_release: dropdown.select(self.text)
-                Button:
-                  text: '[Classification] ResNet-50'
+                  size: 150, 30
+                Widget:
+                  on_parent: dropdown_det.dismiss()
+                DropDown:
+                  id: dropdown_det
+                  on_select: det_selector.text = '{}'.format(args[1])
+                  Button:
+                    text: 'Yolo-v3'
+                    size_hint: None, None
+                    size: 150, 30
+                    on_release: dropdown_det.select(self.text)
+                  Button:
+                    text: 'SSD'
+                    size_hint: None, None
+                    size: 150, 30
+                    on_release: dropdown_det.select(self.text)
+              BoxLayout:
+                # trick to not lost the Dropdown instance
+                __safe_id: [dropdown_cls.__self__]
+                ToggleButton:
+                  id: cls_selector
+                  group: 'model_selector'
+                  text: 'Classification'
+                  on_release:
+                    dropdown_cls.open(self)
+                    self.state = 'down'
                   size_hint: None, None
-                  size: 200, 30
-                  on_release: dropdown.select(self.text)
-                Button:
-                  text: '[Segmentation] DeepLab-V3'
+                  size: 150, 30
+                Widget:
+                  on_parent: dropdown_cls.dismiss()
+                DropDown:
+                  id: dropdown_cls
+                  on_select: cls_selector.text = '{}'.format(args[1])
+                  Button:
+                    text: 'ResNet-50'
+                    size_hint: None, None
+                    size: 150, 30
+                    on_release: dropdown_cls.select(self.text)
+                  Button:
+                    text: 'VGG-16'
+                    size_hint: None, None
+                    size: 150, 30
+                    on_release: dropdown_cls.select(self.text)
+              BoxLayout:
+                # trick to not lost the Dropdown instance
+                __safe_id: [dropdown_seg.__self__]
+                ToggleButton:
+                  id: seg_selector
+                  group: 'model_selector'
+                  text: 'Segmentation'
+                  on_release:
+                    dropdown_seg.open(self)
+                    self.state = 'down'
                   size_hint: None, None
-                  size: 200, 30
-                  on_release: dropdown.select(self.text)
+                  size: 150, 30
+                Widget:
+                  on_parent: dropdown_seg.dismiss()
+                DropDown:
+                  id: dropdown_seg
+                  on_select: seg_selector.text = '{}'.format(args[1])
+                  Button:
+                    text: 'DeepLab-v3'
+                    size_hint: None, None
+                    size: 150, 30
+                    on_release: dropdown_seg.select(self.text)
+                  Button:
+                    text: 'U-Net'
+                    size_hint: None, None
+                    size: 150, 30
+                    on_release: dropdown_seg.select(self.text)
 
             # ********Parameter********
             Label:
@@ -162,7 +217,7 @@
               size: 30, 30
               CheckBox:
                 id: param_encrypted_initial_checkpoint
-                active: False
+                active: True
 
             # ********Parameter********
             Label:
@@ -178,34 +233,6 @@
               multiline: False
               size_hint: None, None
               size: 500, 30
-
-#            # ********Parameter********
-#            Label:
-#              text: 'Model Scale'
-#              size_hint: None, None
-#              text_size: self.size
-#              halign: 'left'
-#              valign: 'center'
-#              size: 150, 30
-#            GridLayout:
-#              id: prarm_model_scale
-#              cols: 3
-#              ToggleButton:
-#                group: 'model_scale'
-#                text: 'Small'
-#                size_hint: None, None
-#                size: 150, 30
-#                state: 'down'
-#              ToggleButton:
-#                group: 'model_scale'
-#                text: 'Middle'
-#                size_hint: None, None
-#                size: 150, 30
-#              ToggleButton:
-#                group: 'model_scale'
-#                text: 'Large'
-#                size_hint: None, None
-#                size: 150, 30
 
             # ********Parameter********
             Label:
@@ -255,4 +282,34 @@
               min: 1
               step: 1
               max: 256
+
+            # ********Parameter********
+            Label:
+              text: 'Input Width'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            TextInput:
+              id: param_input_w
+              text: "416"
+              multiline: False
+              size_hint: None, None
+              size: 500, 30
+
+            # ********Parameter********
+            Label:
+              text: 'Input Height'
+              size_hint: None, None
+              text_size: self.size
+              halign: 'left'
+              valign: 'center'
+              size: 150, 30
+            TextInput:
+              id: param_input_h
+              text: "416"
+              multiline: False
+              size_hint: None, None
+              size: 500, 30
 
