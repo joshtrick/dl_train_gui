@@ -115,18 +115,20 @@ class DetectionScreen(Screen):
         print("--------Parameters List--------")
 
     # ********Functions for File Chooser Dialog********
-    def show_filechosser(self, text_input_id, choose_path = False):
+    def show_filechosser(self, text_input_id, choose_path = False, filters = []):
         if choose_path:
             title = "Path Seclector"
             content = FileChooserDialog(
                     select = self.select_path,
                     cancel = self.dismiss_filechooser,
+                    filters = filters,
                     text_info = self.ids[text_input_id])
         else:
             title = "File Seclector"
             content = FileChooserDialog(
                     select = self.select_file,
                     cancel = self.dismiss_filechooser,
+                    filters = filters,
                     text_info = self.ids[text_input_id])
         self._popup = Popup(
                 title = title,

@@ -47,7 +47,7 @@ class EvaluateScreen(Screen):
                                                         + self.toggle_btn_text('seg_selector', self.ids.seg_selector.text)
         self.param_dict['num_classes']                  = int(self.ids.param_num_classes.text)
         self.param_dict['gpus']                         = self.ids.param_gpus.text
-        self.param_dict['checkpoint_path']              = self.ids.param_checkpoint_path.text
+        self.param_dict['checkpoint_path']              = self.ids.param_checkpoint_path.text.replace('.index', '')
         self.param_dict['encrypted_initial_checkpoint'] = self.ids.param_encrypted_initial_checkpoint.active
         self.param_dict['batch_size']                   = self.ids.param_batch_size.value
         self.param_dict['input_sizes']                  = [int(self.ids.param_input_w.text), int(self.ids.param_input_h.text)]
@@ -92,18 +92,20 @@ class EvaluateScreen(Screen):
         print("--------Parameters List--------")
 
     # ********Functions for File Chooser Dialog********
-    def show_filechosser(self, text_input_id, choose_path = False):
+    def show_filechosser(self, text_input_id, choose_path = False, filters = []):
         if choose_path:
             title = "Path Seclector"
             content = FileChooserDialog(
                     select = self.select_path,
                     cancel = self.dismiss_filechooser,
+                    filters = filters,
                     text_info = self.ids[text_input_id])
         else:
             title = "File Seclector"
             content = FileChooserDialog(
                     select = self.select_file,
                     cancel = self.dismiss_filechooser,
+                    filters = filters,
                     text_info = self.ids[text_input_id])
         self._popup = Popup(
                 title = title,
@@ -152,6 +154,7 @@ class EvaluateScreen(Screen):
 
     def evaluate(self):
         if self.eval_process == None:
+            self.ids.evaluate_btn.text = "Stop"
             input_configuration = self.set_config()
             self.eval_process = subprocess.Popen([ \
                     'python', \
@@ -159,14 +162,6 @@ class EvaluateScreen(Screen):
                     '-t', 'eval', \
                     '-i', input_configuration])
         else:
-            print("Already running")
             self.eval_process.kill()
             self.eval_process = None
-
-
-    def stop(self):
-        try:
-            self.train_process.kill()
-            self.train_process = None
-        except:
-            pass
+            self.ids.evaluate_btn.text = "Run"

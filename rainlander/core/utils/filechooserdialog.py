@@ -17,9 +17,9 @@ class FileChooserDialog(FloatLayout):
     select = ObjectProperty(None)
     cancel = ObjectProperty(None)
     text_info = ObjectProperty(None)
+    filters = ObjectProperty(None)
     Builder.load_file('ui/utils/filechooserdialog.kv')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         pass

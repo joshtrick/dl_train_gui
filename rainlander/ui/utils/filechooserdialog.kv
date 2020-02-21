@@ -1,12 +1,14 @@
+#: import os os
 <FileChooserDialog>:
   BoxLayout:
     size: root.size
     pos: root.pos
     orientation: "vertical"
-    FileChooserIconView:
-#    FileChooserListView:
+#    FileChooserIconView:
+    FileChooserListView:
       id: filechooser
-      path: '.'
+      filters: root.filters
+      path: os.getcwd()
 
     BoxLayout:
       size_hint_y: None

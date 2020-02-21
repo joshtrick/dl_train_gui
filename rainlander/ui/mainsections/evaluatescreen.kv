@@ -62,6 +62,7 @@
             width: self.minimum_width
             height: self.minimum_height
             Button:
+              id: evaluate_btn
               text: 'Run'
               size_hint: None, None
               size: 150, 30
@@ -187,7 +188,7 @@
               text: 'Model File'
               size_hint: None, None
               size: 150, 30
-              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path")
+              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path", filters = ['*.index'])
             TextInput:
               id: param_checkpoint_path
               multiline: False
