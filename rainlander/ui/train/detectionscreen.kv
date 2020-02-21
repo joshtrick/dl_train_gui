@@ -230,7 +230,7 @@
           text: 'Class List File'
           size_hint: None, None
           size: 150, 30
-          on_release: root.show_filechosser(text_input_id = "param_class_name_path")
+          on_release: root.show_filechosser(text_input_id = "param_class_name_path", filters = ["*.names"])
         TextInput:
           id: param_class_name_path
           multiline: False
