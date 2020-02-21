@@ -14,7 +14,9 @@
         id: file_tree
         path: os.getcwd()
         filters: ['*.jpg', '*.jpeg', '*.JPEG', '*.JPG', '*.PNG', '*.png', '*.BMP', '*.bmp']
-        on_selection: root.load_preview()
+        on_selection:
+          root.load_preview()
+          root.load_results()
     BoxLayout:
       id: main_panel
       orientation: 'vertical'
@@ -63,7 +65,7 @@
               text: 'Run'
               size_hint: None, None
               size: 150, 30
-              on_release: root.load_result()
+              on_release: root.evaluate()
           GridLayout:
             size_hint: None, None
             spacing: 5
@@ -185,7 +187,7 @@
               text: 'Model File'
               size_hint: None, None
               size: 150, 30
-              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path", choose_path = True)
+              on_release: root.show_filechosser(text_input_id = "param_checkpoint_path")
             TextInput:
               id: param_checkpoint_path
               multiline: False

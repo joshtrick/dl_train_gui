@@ -18,7 +18,6 @@ from google.protobuf import text_format
 from crtrain.protos.pipeline_pb2 import TrainPipeLine
 
 from core.utils.filechooserdialog import FileChooserDialog
-from utils.dummy import dummy_func
 
 class DetectionScreen(Screen):
 
@@ -39,7 +38,7 @@ class DetectionScreen(Screen):
     # ********Parameters Registry********
     def param_init(self, dt = 0):
         self.param_update()
-        self.param_print()
+        #self.param_print()
 
     def param_update(self):
         self.param_dict['model_type']                   = self.alias_dict[self.ids.param_model_type.text]
@@ -63,7 +62,13 @@ class DetectionScreen(Screen):
         self.param_dict['gray']                         = self.ids.param_gray.active
 
     def write_config(self):
-        pipe = TrainPipeLine()  # 训练pipeline
+        # Create projects
+        project_path = self.param_dict['train_dir']
+        os.makedirs(project_path)
+        train_config_path = os.path.join(project_path, "train.config")
+
+        # Create pipeline
+        pipe = TrainPipeLine()
 
         pipe.model.detector.yolo.num_classes             = self.param_dict['num_classes']
         pipe.model.detector.yolo.model_scale             = 0
@@ -85,10 +90,6 @@ class DetectionScreen(Screen):
         #pipe.reader.preprocessing.random_shuffle_channel = self.param_dict['random_shuffle_channel']
         #pipe.reader.preprocessing.gray                   = self.param_dict['gray']
 
-        # Create projects
-        project_path = self.param_dict['train_dir']
-        os.makedirs(project_path)
-        train_config_path = os.path.join(project_path, "train.config")
         with open(train_config_path, 'w') as fp:
           fp.write(text_format.MessageToString(pipe))
         return train_config_path
