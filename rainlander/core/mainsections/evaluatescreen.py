@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
+from kivy.uix.filechooser import FileSystemAbstract
 
 from google.protobuf import text_format
 from crtrain.protos.pipeline_pb2 import EvalPipeLine
@@ -25,6 +26,7 @@ class EvaluateScreen(Screen):
         super().__init__(**kwargs)
         self.param_dict = {}
         self.eval_process = None
+        self.current_idx = 0
         Clock.schedule_once(self.param_init, 0)
 
     # ********Parameters Registry********
@@ -130,21 +132,49 @@ class EvaluateScreen(Screen):
         self.dismiss_filechooser()
 
     # ********Functions for Image Loading********
-    def load_preview(self):
+    def load_preview(self, img_file_path):
         try:
-            self.ids.img_display.source = self.ids.file_tree.selection[0]
+            #self.ids.img_display.source = self.ids.file_tree.selection[0]
+            self.ids.img_display.source = img_file_path
         except:
-            return
+            pass
 
-    def load_results(self):
+    def load_results(self, img_file_path):
         try:
             img_path = self.ids.file_tree.path
-            file_name = os.path.basename(self.ids.file_tree.selection[0])
+            file_name = os.path.basename(img_file_path)
             ret_file_path = os.path.join(img_path, "rl_results", file_name)
             if os.path.exists(ret_file_path):
                 self.ids.ret_display.source = ret_file_path
         except:
             pass
+
+    def load_on_selection(self):
+        try:
+            self.current_idx = self.ids.file_tree.files.index(self.ids.file_tree.selection[0])
+            self.load_preview(self.ids.file_tree.selection[0])
+            self.load_results(self.ids.file_tree.selection[0])
+        except:
+            pass
+
+    # ********Functions for Images List View********
+    def show_next(self):
+        if len(self.ids.file_tree.selection) > 0 and (self.current_idx + 1) < len(self.ids.file_tree.files):
+            self.current_idx += 1
+            try:
+                self.load_preview(self.ids.file_tree.files[self.current_idx])
+                self.load_results(self.ids.file_tree.files[self.current_idx])
+            except:
+                pass
+
+    def show_previous(self):
+        if len(self.ids.file_tree.selection) > 0 and (self.current_idx - 1) >= 0:
+            self.current_idx -= 1
+            try:
+                self.load_preview(self.ids.file_tree.files[self.current_idx])
+                self.load_results(self.ids.file_tree.files[self.current_idx])
+            except:
+                pass
 
     # ********Functions for Evaluation********
     def set_config(self):

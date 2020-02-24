@@ -10,13 +10,26 @@
       width:    (scr_layout.width + self.strip_size) / 5 * 1.2
       max_size: (scr_layout.width + self.strip_size) / 5 * 4
       sizable_from: 'right'
-      FileChooserListView:
-        id: file_tree
-        path: os.getcwd()
-        filters: ['*.jpg', '*.jpeg', '*.JPEG', '*.JPG', '*.PNG', '*.png', '*.BMP', '*.bmp']
-        on_selection:
-          root.load_preview()
-          root.load_results()
+      BoxLayout:
+        orientation: 'vertical'
+        FileChooserListView:
+          id: file_tree
+          path: os.getcwd()
+          filters: ['*.jpg', '*.jpeg', '*.JPEG', '*.JPG', '*.PNG', '*.png', '*.BMP', '*.bmp']
+          on_selection:
+            root.load_on_selection()
+        BoxLayout:
+          size_hint_y: None
+          height: 30
+          Button:
+            text: "Previous"
+            on_release:
+              root.show_previous()
+          Button:
+            text: "Next"
+            on_release:
+              root.show_next()
+
     BoxLayout:
       id: main_panel
       orientation: 'vertical'
